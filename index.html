@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Photo Album</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📸 My Photo Album</h1>
+    <label class="upload-label" for="upload">Upload Images</label>
+    <input type="file" id="upload" accept="image/*" multiple hidden />
+
+    <div class="action-bar right-align">
+      <button onclick="bulkDelete()">🗑️ Delete</button>
+      <button onclick="bulkFavorite()">❤️ Add to favorites</button>
+      <button onclick="toggleDarkMode()">🌓 Toggle Dark Mode</button>
+    </div>
+
+    <h2>All Photos</h2>
+    <div id="gallery" class="gallery"></div>
+
+    <h2>Favorites ❤️</h2>
+    <div id="favorites" class="gallery"></div>
+  </div>
+
+  <!-- Photo viewer modal -->
+  <div id="photo-viewer" class="modal hidden">
+    <span class="nav-btn left" onclick="showPreviousPhoto()">&#60;</span>
+    <img id="viewer-img" />
+    <span class="nav-btn right" onclick="showNextPhoto()">&#62;</span>
+    <button class="close-btn" onclick="closeViewer()">✖</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
