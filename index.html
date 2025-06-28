@@ -1,38 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Photo Album</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>📸 My Photo Album</h1>
-    <label class="upload-label" for="upload">Upload Images</label>
-    <input type="file" id="upload" accept="image/*" multiple hidden />
+  <head>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+    
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>📸  Photos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class'
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    </script>
+    
+  </head>
+  <body class="bg-gradient-to-br from-zinc-100 to-zinc-300 dark:from-zinc-900 dark:to-zinc-800 text-zinc-900 dark:text-white transition-colors duration-300 min-h-screen">
 
-    <div class="action-bar right-align">
-      <button onclick="bulkDelete()">🗑️ Delete</button>
-      <button onclick="bulkFavorite()">❤️ Add to favorites</button>
-      <button onclick="toggleDarkMode()">🌓 Toggle Dark Mode</button>
+    <div class="max-w-5xl mx-auto px-4 py-10">
+   
+      <div class="flex justify-between items-center mb-10">
+        <div>
+          <h1 class="text-4xl font-bold">📸  Photos</h1>
+          <p class="text-zinc-500 dark:text-zinc-400 text-sm mt-1">Capture your memories, beautifully.</p>
+        </div>
+        <button onclick="toggleDarkMode()" class="bg-zinc-800 text-white px-4 py-2 rounded-full shadow hover:bg-zinc-700">
+          🌓  
+        </button>
+      </div>
+      
+      <div class="flex justify-center mb-8">
+        <label for="upload" class="inline-flex items-center gap-2 
+        bg-zinc-200 text-black hover:bg-zinc-300 
+        dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700
+        text-sm font-medium px-6 py-2 rounded-full cursor-pointer shadow-md transition">
+        <span>➕ Add Images</span>
+      </label>
+      
+        <input type="file" id="upload" accept="image/*" multiple hidden />
+      </div>
+
+      <div id="bulk-actions" class="hidden mb-6 flex flex-wrap justify-center gap-2">
+        <button onclick="bulkFavorite()" 
+          class="bg-zinc-200 text-black dark:bg-zinc-800 dark:text-white 
+                 hover:bg-zinc-300 dark:hover:bg-zinc-700 
+                 px-4 py-2 rounded shadow 
+                 transition-colors duration-300 ease-in-out">
+          ❤️
+        </button>
+      
+        <button onclick="bulkDelete()" 
+          class="bg-zinc-200 text-black dark:bg-zinc-800 dark:text-white 
+                 hover:bg-zinc-300 dark:hover:bg-zinc-700 
+                 px-4 py-2 rounded shadow 
+                 transition-colors duration-300 ease-in-out">
+          🗑️
+        </button>
+      
+        <button onclick="bulkDownload()" 
+          class="bg-zinc-200 text-black dark:bg-zinc-800 dark:text-white 
+                 hover:bg-zinc-300 dark:hover:bg-zinc-700 
+                 px-4 py-2 rounded shadow 
+                 transition-colors duration-300 ease-in-out">
+          📥
+        </button>
+      </div>
+      
+      <div>
+        <h2 class="text-2xl font-semibold mb-4">All Photos</h2>
+        <div id="gallery" class="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"></div>
+      </div>
+      
+      <div class="mt-12">
+        <h2 class="text-2xl font-semibold mb-4">Favorites </h2>
+        <div id="favorites" class="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"></div>
+      </div>
+    </div>
+   
+    <div id="photo-viewer" class="fixed inset-0 bg-black bg-opacity-90 hidden z-50 flex items-center justify-center gap-4">
+      <span class="text-white text-3xl cursor-pointer" onclick="showPreviousPhoto()">&#60;</span>
+      <img id="viewer-img" class="max-h-[80vh] max-w-[80vw] rounded-lg shadow-xl"/>
+      <span class="text-white text-3xl cursor-pointer" onclick="showNextPhoto()">&#62;</span>
+      <button class="absolute top-6 right-6 text-white text-2xl" onclick="closeViewer()">✖</button>
     </div>
 
-    <h2>All Photos</h2>
-    <div id="gallery" class="gallery"></div>
-
-    <h2>Favorites ❤️</h2>
-    <div id="favorites" class="gallery"></div>
-  </div>
-
-  <!-- Photo viewer modal -->
-  <div id="photo-viewer" class="modal hidden">
-    <span class="nav-btn left" onclick="showPreviousPhoto()">&#60;</span>
-    <img id="viewer-img" />
-    <span class="nav-btn right" onclick="showNextPhoto()">&#62;</span>
-    <button class="close-btn" onclick="closeViewer()">✖</button>
-  </div>
-
-  <script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
